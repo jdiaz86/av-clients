@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_name: Jorge Alejandro
+  last_name: Diaz Echeverria
+  phone_number: 502-555-595335
+  address: NE Wester avenue
+  city: Chicago
+  state: Illinois
+  zip_code: 34535
+
+two:
+  first_name: Herber Alexander
+  last_name: Vasquez
+  phone_number: 34843-34233
+  address: North Avenue 14th Street
+  city: Los Angeles
+  state: California
+  zip_code: 43535
