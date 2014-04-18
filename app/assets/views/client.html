@@ -1,2 +1,10 @@
 <h1 class="text-center"> Item </h1>
-{{title}} Client #: {{ clientId }}
+{{title}} Client #: '{{ data.clientId }}''
+
+	First Name: {{data.clients[data.clientId].first_name}}  
+	Last Name: {{data.clients[data.clientId].last_name}}
+	Phone Number: {{data.clients[data.clientId].phone_number}}
+	Address: {{data.clients[data.clientId].address}}
+	State: {{data.clients[data.clientId].state}}
+	City: {{data.clients[data.clientId].city}}
+	Zip Code: {{data.clients[data.clientId].zip_code}}

@@ -1,3 +1,13 @@
-@ClientCtrl = ($scope, $routeParams) ->
+@ClientCtrl = ($scope, $routeParams, clientData) ->
 	$scope.title = "item"
-	$scope.clientId = $routeParams.clientId
+
+	$scope.data = clientData.data
+
+	clientData.loadClients()
+	
+
+	# Remove the ':' from clientId param
+	$scope.data.clientId = $routeParams.clientId.substr(1)
+
+@ClientCtrl.$inject = ['$scope', '$routeParams', 'clientData']
+
