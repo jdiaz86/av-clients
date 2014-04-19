@@ -14,6 +14,8 @@ List.config(['$routeProvider',($routeProvider) ->
 
 	$routeProvider.when('/client/:clientId', { templateUrl: '../assets/client.html', controller: 'ClientCtrl' })
 
+	$routeProvider.when('/add', { templateUrl: '../assets/addClient.html', controller: 'AddClientCtrl' })
+
 	$routeProvider.otherwise({ redirectTo: '/list' })
 
 ])

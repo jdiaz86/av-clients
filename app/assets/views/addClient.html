@@ -1,0 +1,45 @@
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <a ng-click="navHome()" class="brand" style="cursor:pointer;">AV Clients</a>
+    <ul class="nav pull-right">
+
+    </ul>
+  </div>
+</div>
+
+<div class="container" style="margin-top: 40px">
+  <h1 class="text-center">Add New Client</h1>
+  <p></p>
+  <form>
+    <fieldset>
+      <label><strong>First Name</strong></label>
+      <input class="span8" ng-model="formData.firstName" placeholder="Add the client's first name" type="text" maxlength="250">
+
+      <label><strong>Last Name</strong></label>
+      <input class="span8" ng-model="formData.lastName" placeholder="Add the client's last name" type="text" maxlength="250">
+
+      <label><strong>Phone Number</strong></label>
+      <input class="span8" ng-model="formData.phoneNumber" placeholder="Add the client's phone number" type="text" maxlength="250">
+
+      <label><strong>Address</strong></label>
+      <input class="span8" ng-model="formData.address" placeholder="Add the client's address" type="text" maxlength="250">
+
+      <label><strong>City</strong></label>
+      <input class="span8" ng-model="formData.city" placeholder="Add the client's city" type="text" maxlength="250">
+
+      <label><strong>State</strong></label>
+      <select class="span8" ng-model="formData.state" ng-options="opt.name for opt in options">
+          <option value="" ng-hide="formData.state">Add the client's state</option>
+      </select>
+
+      <label><strong>Zip Code</strong></label>
+      <input class="span8" ng-model="formData.zipCode" placeholder="Add the client's zip code" type="text" maxlength="100">
+
+      <p></p>
+
+
+      <button class="btn btn-primary" ng-click="addClient()">Create</button>
+      <button class="btn btn-danger" ng-click="clearPost()">Clear post</button>
+    </fieldset>
+  </form>
+</div>

@@ -1,12 +1,24 @@
-<h1 class="text-center"> {{title}} </h1>
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<a href="#" class="brand">{{title}}</a>
+		<ul class="nav pull-right">
+			<li><a ng-click="navAddClient()" style="cursor:pointer;">Add Client</a></li>
 
-<div class="row" ng-repeat="client in data.clients">
-	First Name: {{client.first_name}}
-	Last Name: {{client.last_name}}
-	Phone Number: {{client.phone_number}}
-	Address: {{client.address}}
-	State: {{client.state}}
-	City: {{client.city}}
-	Zip Code: {{client.zip_code}}
-	******************************************************
+		</ul>
+	</div>
+</div>
+
+<div class="container" style="margin-top: 40px">
+	<h1 class="text-center"> {{title}} </h1>
+
+	<div class="row" ng-repeat="client in data.clients">
+		First Name: {{client.first_name}}
+		Last Name: {{client.last_name}}
+		Phone Number: {{client.phone_number}}
+		Address: {{client.address}}
+		State: {{client.state}}
+		City: {{client.city}}
+		Zip Code: {{client.zip_code}}
+		******************************************************
+	</div>
 </div>
