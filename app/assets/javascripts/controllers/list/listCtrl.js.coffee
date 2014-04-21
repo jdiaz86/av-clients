@@ -2,10 +2,15 @@
 	$scope.title = "AV Clients"
 
 	$scope.clients = [{first_name: "Loading data..."}]
+	$scope.edit = false;
 	$scope.showFilter = false;
 
 	$scope.toogleFilter = -> 
 		$scope.showFilter = (if $scope.showFilter is false then true else false)
+
+	$scope.toogleEdit = (clientId) ->
+		$scope.edit = (if $scope.edit is false then true else false)
+		console.log(clientId)
 
 
 	$scope.viewClient = (clientId) ->
@@ -13,6 +18,15 @@
 
 	$scope.navAddClient = ->
 		$location.url('/add')
+
+	$http.jsonp('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.states%20where%20place%3D%22United%20States%22&format=json&diagnostics=true&callback=JSON_CALLBACK').success( (data) ->
+		$scope.options = data.query.results.place
+		console.log("carga options")
+		console.log($scope.options[0])
+		console.log($scope.options)
+	).error( (error) ->
+		console.log("error")
+	)
 
 	$resource('./clients.json',{},{}).query().$promise.then( (data) ->
 		$scope.tableParams = new ngTableParams(

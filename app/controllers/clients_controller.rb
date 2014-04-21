@@ -1,6 +1,9 @@
 class ClientsController < ApplicationController
 	respond_to :json
 
+	#def update
+		#Client.update(params[:id], )
+
 	def create
 
 		new_client = Client.new

@@ -26,36 +26,36 @@ form .input-group
   <h1 class="text-center">Add New Client</h1>
   <p></p>
   <form action="" ng-submit="addClient()" style="margin: 2em 0 0 15em;">
-    
+
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span> First Name </span>      
-      <input class="span6" ng-model="formData.firstName" placeholder="Add the client's first name" type="text" maxlength="250" ng-required="true">
-      
+      <input class="span6" ng-model="formData.firstName" placeholder="Add the client's first name" type="text" maxlength="100" ng-required="true">
+
       <span class="text-error" ng-hide="formData.firstName"> Required! </span>
 
     </div>
 
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span> Last Name </span>
-      <input class="span6" ng-model="formData.lastName" placeholder="Add the client's last name" type="text" maxlength="250" ng-required="true">
+      <input class="span6" ng-model="formData.lastName" placeholder="Add the client's last name" type="text" maxlength="100" ng-required="true">
       <span class="text-error" ng-hide="formData.lastName"> Required! </span>
     </div>
 
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span> Phone Number</span>
-      <input class="span6" ng-model="formData.phoneNumber" placeholder="Add the client's phone number" type="text" maxlength="250" ng-required="true">
+      <input class="span6" ng-model="formData.phoneNumber" placeholder="Add the client's phone number" type="text" maxlength="100" ng-required="true">
       <span class="text-error" ng-hide="formData.phoneNumber"> Required! </span>
     </div>
 
     <div class="input-group">
 
       <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span> Address</span>
-      <input class="span6" ng-model="formData.address" placeholder="Add the client's address" type="text" maxlength="250">
+      <input class="span6" ng-model="formData.address" placeholder="Add the client's address" type="text" maxlength="100">
     </div>
 
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-tag"></span> City</span>
-      <input class="span6" ng-model="formData.city" placeholder="Add the client's city" type="text" maxlength="250">
+      <input class="span6" ng-model="formData.city" placeholder="Add the client's city" type="text" maxlength="100">
     </div>
 
     <div class="input-group">
@@ -63,7 +63,7 @@ form .input-group
       <select class="span6" ng-model="formData.state" ng-options="opt.name for opt in options" ng-required="formData.address || formData.city || formData.zipCode">
         <option value="" ng-hide="formData.state">Add the client's state</option>
       </select>
-      <button class="btn btn-danger btn-xs" ng-click="formData.state=''" ng-show="formData.state"> <span class="glyphicon glyphicon-remove"></span> x</button>
+      <button class="btn btn-danger btn-xs" ng-click="formData.state=''" ng-show="formData.state"> <span class="glyphicon glyphicon-remove"></span></button>
       <span class="text-error" ng-show="( (formData.address || formData.city) || formData.zipCode) && !formData.state"> Required! </span>
     </div>
 

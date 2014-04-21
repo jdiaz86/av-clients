@@ -23,9 +23,3 @@ List.config(['$routeProvider',($routeProvider) ->
 List.config(["$httpProvider", (provider) ->
 	provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')	
 ])
-
-List.filter "startFrom", ->
-  (input, start) ->
-    start = +start #parse to int
-    input.slice start
-

@@ -11,23 +11,51 @@
 <div class="container" style="margin-top: 40px">
 	<h1 class="text-center"> {{title}} </h1>
 
-	<p><strong>Page:</strong> {{tableParams.page()}}</p>
-    <p><strong>Count per page:</strong> {{tableParams.count()}}</p>
-    <p><strong>Total:</strong> {{tableParams.total()}}</p>
+    <p style="display:inline-block;"><strong>Total of Clients:</strong> {{tableParams.total()}}</p>
 
-	<button class="btn btn-danger" ng-click="toogleFilter()">Search Clients</button>
+	<button class="btn btn-success btn-sm" style="margin-left:73%;" ng-click="toogleFilter()"><span class="glyphicon glyphicon-search"></span> Search Clients</button>
 
 	<table ng-table="tableParams" class="table" show-filter="showFilter">
 	
 	<tbody>
 		<tr ng-repeat="client in clients">
-			<td data-title="'First Name'" sortable="'first_name'" filter="{ 'first_name': 'text'}">{{client.first_name}}</td> 
-			<td data-title="'Last Name'" sortable="'last_name'" filter="{ 'last_name': 'text'}">{{client.last_name}}</td>
-			<td data-title="'Phone Number'" sortable="'phone_number'" filter="{ 'phone_number': 'text'}">{{client.phone_number}}</td>
-			<td data-title="'Address'" sortable="'address'" filter="{ 'address': 'text'}">{{client.address}}</td>
-			<td data-title="'City'" sortable="'city'" filter="{ 'city': 'text'}">{{client.city}}</td>
-			<td data-title="'State'" sortable="'state'" filter="{ 'state': 'text'}">{{client.state}}</td>
-			<td data-title="'Zip Code'" sortable="'zip_code'" filter="{ 'zip_code': 'text'}">{{client.zip_code}}</td>
+			<td data-title="'First Name'" sortable="'first_name'" filter="{ 'first_name': 'text'}">
+				<span ng-if="!client.editMode"> {{client.first_name}} </span>
+				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.first_name" /></div>
+			</td> 
+			<td data-title="'Last Name'" sortable="'last_name'" filter="{ 'last_name': 'text'}">
+				<span ng-if="!client.editMode"> {{client.last_name}} </span>
+				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.last_name" /></div>
+			</td>
+			<td data-title="'Phone Number'" sortable="'phone_number'" filter="{ 'phone_number': 'text'}">
+				<span ng-if="!client.editMode"> {{client.phone_number}} </span>
+				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.phone_number" /></div>
+			</td>
+			<td data-title="'Address'" sortable="'address'" filter="{ 'address': 'text'}">
+				<span ng-if="!client.editMode"> {{client.address}} </span>
+				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.address" /></div>
+			</td>
+			<td data-title="'City'" sortable="'city'" filter="{ 'city': 'text'}">
+				<span ng-if="!client.editMode"> {{client.city}} </span>
+				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.city" /></div>
+			</td>
+			<td data-title="'State'" sortable="'state'" filter="{ 'state': 'text'}" width="160">
+				<span ng-if="!client.editMode"> {{client.state}} </span>
+				<div ng-if="client.editMode"><select class="form-control" ng-model="client.state" ng-options="opt.name for opt in options" >     
+				  <option value="" ng-hide="client.state">{{client.state}}</option>
+				</select></div>
+			</td>
+			<td data-title="'Zip Code'" sortable="'zip_code'" filter="{ 'zip_code': 'text'}">
+				<span ng-if="!client.editMode"> {{client.zip_code}} </span>
+				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.zip_code" /></div>
+			</td>
+
+			<td data-title="'Actions'" width="155">
+                <button ng-if="!client.editMode" class="btn btn-info btn-xs" ng-click="client.editMode = true">Edit</button>
+                <button ng-if="client.editMode" class="btn btn-primary btn-xs" ng-click="client.editMode = false">Save</button>
+                <button class="btn btn-warning btn-xs" ng-click="">View</button>
+                <button  class="btn btn-danger btn-xs" ng-click="">Delete</button>
+            </td>
 		</tr>
 	</tbody>
 	</table>
