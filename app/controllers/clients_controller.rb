@@ -1,8 +1,16 @@
 class ClientsController < ApplicationController
 	respond_to :json
 
-	#def update
-		#Client.update(params[:id], )
+	def update
+		Client.update(params[:update_client][:id], { :first_name => params[:update_client][:first_name] ,
+												     :last_name => params[:update_client][:last_name] ,
+												     :phone_number => params[:update_client][:phone_number] ,
+												     :address => params[:update_client][:address] ,
+												     :city => params[:update_client][:city] ,
+												     :state => params[:update_client][:state] ,
+												     :zip_code => params[:update_client][:zip_code] })
+
+	end
 
 	def create
 

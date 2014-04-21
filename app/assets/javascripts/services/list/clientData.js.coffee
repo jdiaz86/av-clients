@@ -6,6 +6,24 @@ angular.module('List').factory('clientData', ['$http', '$location', ($http,$loca
 		isLoaded: false
 		clientArray: []
 
+	#Method to update an existing client
+	clientData.updateClient = (client) ->
+		console.log("beff")
+		console.log(client)
+		data =
+			update_client:
+				id: client.id
+				first_name: client.first_name
+				last_name: client.last_name
+				phone_number: client.phone_number
+				address: client.address
+				city: client.city
+				state: client.state
+				zip_code: client.zip_code
+		console.log("before going to server")
+		console.log(data)
+		$http.put('./clients/'+data.update_client.id,data)
+
 	#Method to create a new client
 	clientData.addClient = (newClient) ->
 		data =

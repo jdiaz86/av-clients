@@ -52,7 +52,7 @@
 
 			<td data-title="'Actions'" width="155">
                 <button ng-if="!client.editMode" class="btn btn-info btn-xs" ng-click="client.editMode = true">Edit</button>
-                <button ng-if="client.editMode" class="btn btn-primary btn-xs" ng-click="client.editMode = false">Save</button>
+                <button ng-if="client.editMode" class="btn btn-primary btn-xs" ng-click="client.editMode = false; saveEdit(client);">Save</button>
                 <button class="btn btn-warning btn-xs" ng-click="">View</button>
                 <button  class="btn btn-danger btn-xs" ng-click="">Delete</button>
             </td>
