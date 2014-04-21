@@ -7,7 +7,7 @@
 #= require_tree ./controllers/list
 #= require_tree ./directives/list
 
-List = angular.module('List',['ngRoute'])
+List = angular.module('List',['ngRoute', 'ngTable', 'ngResource'])
 
 List.config(['$routeProvider',($routeProvider) ->
 	$routeProvider.when('/list', { templateUrl: '../assets/list.html',controller: 'ListCtrl' })
@@ -19,3 +19,13 @@ List.config(['$routeProvider',($routeProvider) ->
 	$routeProvider.otherwise({ redirectTo: '/list' })
 
 ])
+
+List.config(["$httpProvider", (provider) ->
+	provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')	
+])
+
+List.filter "startFrom", ->
+  (input, start) ->
+    start = +start #parse to int
+    input.slice start
+

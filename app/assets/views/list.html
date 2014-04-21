@@ -11,14 +11,25 @@
 <div class="container" style="margin-top: 40px">
 	<h1 class="text-center"> {{title}} </h1>
 
-	<div class="row" ng-repeat="client in data.clients">
-		First Name: {{client.first_name}}
-		Last Name: {{client.last_name}}
-		Phone Number: {{client.phone_number}}
-		Address: {{client.address}}
-		State: {{client.state}}
-		City: {{client.city}}
-		Zip Code: {{client.zip_code}}
-		******************************************************
-	</div>
+	<p><strong>Page:</strong> {{tableParams.page()}}</p>
+    <p><strong>Count per page:</strong> {{tableParams.count()}}</p>
+    <p><strong>Total:</strong> {{tableParams.total()}}</p>
+
+	<button class="btn btn-danger" ng-click="toogleFilter()">Search Clients</button>
+
+	<table ng-table="tableParams" class="table" show-filter="showFilter">
+	
+	<tbody>
+		<tr ng-repeat="client in clients">
+			<td data-title="'First Name'" sortable="'first_name'" filter="{ 'first_name': 'text'}">{{client.first_name}}</td> 
+			<td data-title="'Last Name'" sortable="'last_name'" filter="{ 'last_name': 'text'}">{{client.last_name}}</td>
+			<td data-title="'Phone Number'" sortable="'phone_number'" filter="{ 'phone_number': 'text'}">{{client.phone_number}}</td>
+			<td data-title="'Address'" sortable="'address'" filter="{ 'address': 'text'}">{{client.address}}</td>
+			<td data-title="'City'" sortable="'city'" filter="{ 'city': 'text'}">{{client.city}}</td>
+			<td data-title="'State'" sortable="'state'" filter="{ 'state': 'text'}">{{client.state}}</td>
+			<td data-title="'Zip Code'" sortable="'zip_code'" filter="{ 'zip_code': 'text'}">{{client.zip_code}}</td>
+		</tr>
+	</tbody>
+	</table>
+
 </div>

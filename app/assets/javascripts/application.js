@@ -15,3 +15,5 @@
 //= require bootstrap
 //= require angular
 //= require angular-route
+//= require ng-table
+//= require angular-resource
