@@ -12,6 +12,11 @@ class ClientsController < ApplicationController
 
 	end
 
+	def destroy
+		Client.find(params[:id]).destroy
+
+	end
+
 	def create
 
 		new_client = Client.new

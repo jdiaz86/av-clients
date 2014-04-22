@@ -1,3 +1,9 @@
+<style>
+.ng-table-pager .ng-table-counts .btn-group .pull-right .ng-scope
+{
+	display:none;
+}
+</style>
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<a href="#" class="brand">{{title}}</a>
@@ -16,9 +22,9 @@
 	<button class="btn btn-success btn-sm" style="margin-left:73%;" ng-click="toogleFilter()"><span class="glyphicon glyphicon-search"></span> Search Clients</button>
 
 	<table ng-table="tableParams" class="table" show-filter="showFilter">
-	
+
 	<tbody>
-		<tr ng-repeat="client in clients">
+		<tr ng-repeat="client in clients" ng-init="selectionIndex = $index">
 			<td data-title="'First Name'" sortable="'first_name'" filter="{ 'first_name': 'text'}">
 				<span ng-if="!client.editMode"> {{client.first_name}} </span>
 				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.first_name" /></div>
@@ -54,7 +60,7 @@
                 <button ng-if="!client.editMode" class="btn btn-info btn-xs" ng-click="client.editMode = true">Edit</button>
                 <button ng-if="client.editMode" class="btn btn-primary btn-xs" ng-click="client.editMode = false; saveEdit(client);">Save</button>
                 <button class="btn btn-warning btn-xs" ng-click="">View</button>
-                <button  class="btn btn-danger btn-xs" ng-click="">Delete</button>
+                <button  class="btn btn-danger btn-xs" ng-click="deleteClient(client.id,selectionIndex)">Delete {{$parent.$index}}</button>
             </td>
 		</tr>
 	</tbody>

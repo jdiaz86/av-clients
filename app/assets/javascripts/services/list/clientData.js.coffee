@@ -6,6 +6,13 @@ angular.module('List').factory('clientData', ['$http', '$location', ($http,$loca
 		isLoaded: false
 		clientArray: []
 
+	#Method to delete a client by id
+	clientData.deleteClient = (clientId) ->
+		data =
+			delete_client:
+				id: clientId
+		$http.delete('./clients/'+data.delete_client.id,data)
+
 	#Method to update an existing client
 	clientData.updateClient = (client) ->
 		console.log("beff")
