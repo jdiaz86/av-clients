@@ -5,6 +5,7 @@ angular.module('List').factory('clientData', ['$http', '$location', ($http,$loca
 			clients: [{first_name: 'Loading...'}]
 		isLoaded: false
 		clientArray: []
+		clientView: []
 
 	#Method to delete a client by id
 	clientData.deleteClient = (clientId) ->
@@ -55,7 +56,16 @@ angular.module('List').factory('clientData', ['$http', '$location', ($http,$loca
 		)
 
 	
-
+	#Method to get one client to show
+	clientData.getClient = (clientId) ->
+		$http.get('./clients/' + clientId + '.json').success( (data) ->
+			console.log("getClient")
+			console.log(data)
+			clientData.clientView = data
+		).error( ->
+			console.log("error getting one client")
+		)
+ 
 	#Method to load all clients from api
 	clientData.loadClients = ->
 		if !clientData.isLoaded

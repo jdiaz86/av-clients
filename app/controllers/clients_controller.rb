@@ -42,6 +42,14 @@ class ClientsController < ApplicationController
 	end
 
 
+	def show
+		client = Client.find(params[:id])
+
+		respond_with(client) do |format| 
+			format.json { render:json => client.as_json}
+		end
+	end
+
 	def index
 		#gather all client data
 		clients = Client.all

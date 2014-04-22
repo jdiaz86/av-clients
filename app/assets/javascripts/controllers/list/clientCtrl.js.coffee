@@ -1,13 +1,24 @@
-@ClientCtrl = ($scope, $routeParams, clientData) ->
+@ClientCtrl = ($scope, $routeParams, $resource, clientData) ->
 	$scope.title = "item"
 
-	$scope.data = clientData.data
-
-	clientData.loadClients()
+	$scope.clientView = clientData.clientView
 	
 
 	# Remove the ':' from clientId param
-	$scope.data.clientId = $routeParams.clientId.substr(1)
+	$scope.clientView.clientId = $routeParams.clientId.substr(1)
+	
+	clientData.getClient($scope.clientView.clientId)
 
-@ClientCtrl.$inject = ['$scope', '$routeParams', 'clientData']
+	console.log("hola")
+	console.log(clientData.clientView)
+
+
+	$resource('./clients/' + $scope.clientView.clientId + '.json').get().$promise.then( (data) ->
+			console.log("DATA")
+			console.log(data)
+			$scope.clientView = data
+			console.log($scope.clientView)
+	)
+
+@ClientCtrl.$inject = ['$scope', '$routeParams', '$resource', 'clientData']
 
