@@ -9,6 +9,7 @@
 		<a href="#" class="brand">{{title}}</a>
 		<ul class="nav pull-right">
 			<li><a ng-click="navAddClient()" style="cursor:pointer;">Add Client</a></li>
+			<li><a ng-click="about()" style="cursor:pointer;">About</a></li>
 
 		</ul>
 	</div>
@@ -24,18 +25,18 @@
 	<table ng-table="tableParams" class="table" show-filter="showFilter">
 
 	<tbody>
-		<tr ng-repeat="client in clients" ng-init="selectionIndex = $index">
+		<tr ng-repeat="client in clients" ng-init="selectionIndex = $index" ng-dblclick="dblClick(client)" style="cursor:default">
 			<td data-title="'First Name'" sortable="'first_name'" filter="{ 'first_name': 'text'}">
 				<span ng-if="!client.editMode"> {{client.first_name}} </span>
-				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.first_name" /></div>
+				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.first_name" ng-required="true"/></div>
 			</td> 
 			<td data-title="'Last Name'" sortable="'last_name'" filter="{ 'last_name': 'text'}">
 				<span ng-if="!client.editMode"> {{client.last_name}} </span>
-				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.last_name" /></div>
+				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.last_name" ng-required="true"/></div>
 			</td>
 			<td data-title="'Phone Number'" sortable="'phone_number'" filter="{ 'phone_number': 'text'}">
 				<span ng-if="!client.editMode"> {{client.phone_number}} </span>
-				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.phone_number" /></div>
+				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.phone_number" ng-required="true"/></div>
 			</td>
 			<td data-title="'Address'" sortable="'address'" filter="{ 'address': 'text'}">
 				<span ng-if="!client.editMode"> {{client.address}} </span>
@@ -47,19 +48,19 @@
 			</td>
 			<td data-title="'State'" sortable="'state'" filter="{ 'state': 'text'}" width="160">
 				<span ng-if="!client.editMode"> {{client.state}} </span>
-				<div ng-if="client.editMode"><select class="form-control" ng-model="client.state" ng-options="opt.name for opt in options" >     
+				<div ng-if="client.editMode"><select class="form-control" ng-model="client.state" ng-options="opt.name for opt in options" ng-required="(client.address || client.city || client.zip_code) && !client.state">     
 				  <option value="" ng-hide="client.state">{{client.state}}</option>
 				</select></div>
 			</td>
 			<td data-title="'Zip Code'" sortable="'zip_code'" filter="{ 'zip_code': 'text'}">
 				<span ng-if="!client.editMode"> {{client.zip_code}} </span>
-				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.zip_code" /></div>
+				<div ng-if="client.editMode"><input class="form-control" type="text" ng-model="client.zip_code" ng-required="client.address || client.city || client.state"/></div>
 			</td>
 
 			<td data-title="'Actions'" width="155">
                 <button ng-if="!client.editMode" class="btn btn-info btn-xs" ng-click="client.editMode = true">Edit</button>
-                <button ng-if="client.editMode" class="btn btn-primary btn-xs" ng-click="client.editMode = false; saveEdit(client);">Save</button>
-                <button class="btn btn-warning btn-xs" ng-click="">View</button>
+                <button ng-if="client.editMode" class="btn btn-primary btn-xs" ng-click="saveEdit(client);">Save</button>
+                <button class="btn btn-warning btn-xs" ng-click="viewClient(client.id)">View</button>
                 <button  class="btn btn-danger btn-xs" ng-click="deleteClient(client.id,selectionIndex)">Delete {{$parent.$index}}</button>
             </td>
 		</tr>

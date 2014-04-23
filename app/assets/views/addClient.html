@@ -63,7 +63,7 @@ form .input-group
       <select class="span6" ng-model="formData.state" ng-options="opt.name for opt in options" ng-required="formData.address || formData.city || formData.zipCode">
         <option value="" ng-hide="formData.state">Add the client's state</option>
       </select>
-      <button class="btn btn-danger btn-xs" ng-click="formData.state=''" ng-show="formData.state"> <span class="glyphicon glyphicon-remove"></span></button>
+      <button class="btn btn-danger btn-xs" ng-click="formData.state=''" ng-show="formData.state" style="margin-left:0.4em;"> <span class="glyphicon glyphicon-remove"></span></button>
       <span class="text-error" ng-show="( (formData.address || formData.city) || formData.zipCode) && !formData.state"> Required! </span>
     </div>
 

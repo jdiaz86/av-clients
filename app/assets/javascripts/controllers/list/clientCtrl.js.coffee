@@ -1,24 +1,57 @@
-@ClientCtrl = ($scope, $routeParams, $resource, clientData) ->
+@ClientCtrl = ($scope, $routeParams, $resource, $location, $http, clientData) ->
 	$scope.title = "item"
 
-	$scope.clientView = clientData.clientView
-	
+	$scope.navHome = ->
+		$location.url('/')
+
+	$scope.client = clientData.clientView
+	$scope.view = false
+	$scope.edit = false
 
 	# Remove the ':' from clientId param
-	$scope.clientView.clientId = $routeParams.clientId.substr(1)
+	$scope.client.clientId = $routeParams.clientId#substr(1)
 	
-	clientData.getClient($scope.clientView.clientId)
+	unless $scope.client.clientId.indexOf(":") is -1
+  		console.log("view")
+  		$scope.client.clientId = $scope.client.clientId.substr(1)
+  		$scope.view = true
+	else
+		$scope.edit = true
+		console.log ("edit")
+
+	$scope.saveEdit = (client) ->
+		client.state = client.state.name  if (client.state?) and (client.state.name?)
+		console.log(client)
+		
+		$scope.validate = clientData.validateInputs(client)
+
+		console.log("UPDATE "  + $scope.validate)
+		client.editMode = false;
+		#clientData.updateClient(client)
+
+	$http.jsonp('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.states%20where%20place%3D%22United%20States%22&format=json&diagnostics=true&callback=JSON_CALLBACK').success( (data) ->
+				$scope.options = data.query.results.place
+			).error( (error) ->
+				console.log("error")
+				console.log(error)
+			)
+
+
+	console.log("edit: " + $scope.edit)
+	console.log("view: " + $scope.view)
+
+	clientData.getClient($scope.client.clientId)
 
 	console.log("hola")
-	console.log(clientData.clientView)
+	console.log(clientData.client)
 
 
-	$resource('./clients/' + $scope.clientView.clientId + '.json').get().$promise.then( (data) ->
+	$resource('./clients/' + $scope.client.clientId + '.json').get().$promise.then( (data) ->
 			console.log("DATA")
 			console.log(data)
-			$scope.clientView = data
-			console.log($scope.clientView)
+			$scope.client = data
+			console.log($scope.client)
 	)
 
-@ClientCtrl.$inject = ['$scope', '$routeParams', '$resource', 'clientData']
+@ClientCtrl.$inject = ['$scope', '$routeParams', '$resource', '$location', '$http', 'clientData']
 

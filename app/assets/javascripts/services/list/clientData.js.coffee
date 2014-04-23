@@ -79,6 +79,28 @@ angular.module('List').factory('clientData', ['$http', '$location', ($http,$loca
 			)
 
 
+	clientData.validateInputs = (client) ->
+		# validates address {zip_code and state}
+		if (client.address isnt "") and ((client.zip_code is "") or (not (client.state?)))
+			console.log("no puede pasar")
+			console.log(client)
+			return false
+		# validates city {zip_code and state}
+		if (client.city isnt "") and ((client.zip_code is "") or (not (client.state?)))
+			console.log("no puede pasar")
+			return false
+		# validates zip_code if state
+		if (client.sate?) and (client.zip_code is "")
+			console.log("no puede pasar")
+			return false
+		# validates state if zip_code
+		if (client.zip_code isnt "") and (not (client.state?))
+			console.log("no puede pasar")
+			return false
+
+		return true
+
+
 	return clientData
 
 ])
