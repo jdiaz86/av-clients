@@ -29,7 +29,7 @@ form .input-group
 
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span> First Name </span>      
-      <input class="span6" ng-model="formData.firstName" placeholder="Add the client's first name" type="text" maxlength="100" ng-required="true">
+      <input class="span6" ng-model="formData.firstName" placeholder="Add the client's first name" type="text" maxlength="100" ng-required="true" >
 
       <span class="text-error" ng-hide="formData.firstName"> Required! </span>
 
@@ -43,7 +43,7 @@ form .input-group
 
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span> Phone Number</span>
-      <input class="span6" ng-model="formData.phoneNumber" placeholder="Add the client's phone number" type="text" maxlength="100" ng-required="true">
+      <input class="span6" ng-model="formData.phoneNumber" placeholder="Enter only numbers (US format valid)" type="text" maxlength="15" ng-required="true">
       <span class="text-error" ng-hide="formData.phoneNumber"> Required! </span>
     </div>
 
@@ -69,7 +69,7 @@ form .input-group
 
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span> Zip Code</span>
-      <input class="span6" ng-model="formData.zipCode" placeholder="Add the client's zip code" type="text" maxlength="100" ng-required="formData.address || formData.city || formData.state">
+      <input class="span6" ng-model="formData.zipCode" placeholder="Enter only numbers" type="text" maxlength="5" ng-required="formData.address || formData.city || formData.state" >
       <span class="text-error" ng-show="( (formData.address || formData.city) || formData.state) && !formData.zipCode"> Required! </span>
     </div>
 

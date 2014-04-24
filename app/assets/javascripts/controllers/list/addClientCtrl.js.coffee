@@ -1,10 +1,21 @@
-@AddClientCtrl = ($scope, $location, $http, clientData) ->
+@AddClientCtrl = ($scope, $location, $http, $sanitize, $sce, clientData) ->
 
 	$scope.navHome = ->
      $location.url('/')
 
 	$scope.data = clientData.data
 	clientData.loadClients()
+
+	$scope.$watch "formData.phoneNumber", ->
+		$scope.formData.phoneNumber = formatLocal "US", $scope.formData.phoneNumber
+
+	$scope.$watch "formData.zipCode", ->
+		if isNaN($scope.formData.zipCode)
+			$scope.formData.zipCode = $scope.formData.zipCode.substring(0,$scope.formData.zipCode.length-1)
+
+	$scope.$watch "formData.firstName", ->
+		#console.log( $sce.getTrustedHtml($sce.trustAsHtml($scope.formData.firstName)))
+		#$scope.formData.firstName = $sce.trustAsHtml($scope.formData.firstName)
 
 	$scope.clearData = ->
 		$scope.formData =
@@ -26,9 +37,10 @@
 			)
 
 	$scope.addClient = ->
-		clientData.addClient($scope.formData)
+		#clientData.addClient($scope.formData)
+		console.log($scope.formData)
 			 
 
 
 
-@AddClientCtrl.$inject = ['$scope', '$location', '$http', 'clientData']
+@AddClientCtrl.$inject = ['$scope', '$location', '$http', '$sanitize', '$sce', 'clientData']

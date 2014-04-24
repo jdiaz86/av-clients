@@ -17,3 +17,5 @@
 //= require angular-route
 //= require ng-table
 //= require angular-resource
+//= require PhoneFormat
+//= require angular-sanitize

@@ -7,7 +7,7 @@
 #= require_tree ./controllers/list
 #= require_tree ./directives/list
 
-List = angular.module('List',['ngRoute', 'ngTable', 'ngResource'])
+List = angular.module('List',['ngRoute', 'ngTable', 'ngResource','ngSanitize'])
 
 List.config(['$routeProvider',($routeProvider) ->
 	$routeProvider.when('/list', { templateUrl: '../assets/list.html',controller: 'ListCtrl' })
