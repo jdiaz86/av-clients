@@ -1,3 +1,4 @@
+###
 @AddClientCtrl = ($scope, $location, $http, $sanitize, $sce, clientData) ->
 
 	$scope.navHome = ->
@@ -37,10 +38,11 @@
 			)
 
 	$scope.addClient = ->
-		#clientData.addClient($scope.formData)
+		clientData.addClient($scope.formData)
 		console.log($scope.formData)
 			 
 
 
 
 @AddClientCtrl.$inject = ['$scope', '$location', '$http', '$sanitize', '$sce', 'clientData']
+###

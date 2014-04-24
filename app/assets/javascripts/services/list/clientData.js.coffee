@@ -1,4 +1,4 @@
-angular.module('List').factory('clientData', ['$http', '$location', ($http,$location) ->
+angular.module('List').factory('clientData', ['$http', '$location', '$sanitize', ($http,$location) ->
 
 	clientData = 
 		data:
@@ -36,13 +36,13 @@ angular.module('List').factory('clientData', ['$http', '$location', ($http,$loca
 	clientData.addClient = (newClient) ->
 		data =
 			new_client:
-				first_name: newClient.firstName
-				last_name: newClient.lastName
-				phone_number: newClient.phoneNumber
+				first_name: $sanitize(newClient.first_name)
+				last_name: newClient.last_name
+				phone_number: newClient.phone_number
 				address: newClient.address
 				city: newClient.city
 				state: newClient.state.name
-				zip_code: newClient.zipCode
+				zip_code: newClient.zip_code
 
 		$http.post('./clients.json',data).success( (data) ->
 			clientData.data.clients.push(data)

@@ -25,8 +25,11 @@ form .input-group
 <div class="container" style="margin-top: 40px">
   <h1 class="text-center" ng-show="view">View Client</h1>
   <h1 class="text-center" ng-show="edit">Edit Client</h1>
+  <h1 class="text-center" ng-show="add">Add Client</h1>
  <p></p>
-  <form action="" ng-submit="saveEdit(client)" style="margin: 2em 0 0 15em;">
+  
+    <form action="" ng-submit="save(client)" style="margin: 2em 0 0 15em;">
+
 
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span> First Name </span>      
@@ -44,7 +47,7 @@ form .input-group
 
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span> Phone Number</span>
-      <input class="span6" ng-model="client.phone_number" placeholder="Add the client's phone number" type="text" maxlength="100" ng-required="true" ng-disabled="view">
+      <input class="span6" ng-model="client.phone_number" placeholder="Enter only numbers (US format valid)" type="text" maxlength="15" ng-required="true" ng-disabled="view" >
       <span class="text-error" ng-hide="client.phone_number"> Required! </span>
     </div>
 
@@ -70,14 +73,17 @@ form .input-group
 
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span> Zip Code</span>
-      <input class="span6" ng-model="client.zip_code" placeholder="Add the client's zip code" type="text" maxlength="100" ng-required="client.address || client.city || client.state" ng-disabled="view">
+      <input class="span6" ng-model="client.zip_code" placeholder="Add the client's zip code" type="text" maxlength="5" ng-required="client.address || client.city || client.state" ng-disabled="view">
       <span class="text-error" ng-show="( (client.address || client.city) || client.state) && !client.zip_code"> Required! </span>
     </div>
 
     <p></p>
 
     <input class="btn btn-primary" type="submit" id="submit" value="Update Client" ng-show="edit" />
+    <input class="btn btn-primary" type="submit" id="submit" value="Add Client" ng-show="add" />
+    <button class="btn btn-danger" ng-show="add" ng-click="clearData()">Clear Form</button>
     <button class="btn btn-info" ng-click="navHome()">Return </button>
+
 
   </form>
 </div>
