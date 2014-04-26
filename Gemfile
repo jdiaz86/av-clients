@@ -41,3 +41,7 @@ gem 'bootstrap-sass', '~> 2.3.1.0'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'rails_12factor', group: :production
+
+gem 'pg', group: :production
+
