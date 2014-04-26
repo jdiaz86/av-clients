@@ -14,44 +14,34 @@
 	$scope.editClient = (clientId) ->
 		$location.url('/client/' + clientId)
 
-
-
-	$scope.saveEdit = (client) ->
-		client.state = client.state.name  if (client.state?) and (client.state.name?)
-		console.log(client)
-		
-		$scope.validate = clientData.validateInputs(client)
-
-		console.log("UPDATE "  + $scope.validate)
-		client.editMode = false;
-		#clientData.updateClient(client)
-
-	$scope.deleteClient = (clientId, index) ->
-		if confirm('Are you sure you want to delete this client?')
-			clientData.deleteClient(clientId)
-			$scope.loadTable()
-			$scope.clients.splice(index,1)
-			
-		else
-			console.log("not deleting")
-
-
-
-	$scope.viewClient = (clientId) ->
-		$location.url('client/:' + clientId)
-
 	$scope.navAddClient = ->
 		$location.url('/add')
 
 	$scope.about = ->
 		$location.url('/about')
-	
 
+	# Method to edit a client
+	$scope.saveEdit = (client) ->
+		client.state = client.state.name  if (client.state?) and (client.state.name?)
+		$scope.validate = clientData.validateInputs(client)
+		if ($scope.validate)
+			client.editMode = false;
+			clientData.updateClient(client)
+		else
+			alert("You must fill all required fields")
+
+	$scope.deleteClient = (clientId, index) ->
+		if confirm('Are you sure you want to delete this client?')
+			clientData.deleteClient(clientId)
+			$scope.loadTable()
+			$scope.clients.splice(index,1)			
+
+	
 	$scope.dblClick = (client) ->
 		if (!client.editMode) 
 			$scope.editClient(client.id)
 
-
+	# get US states from yql
 	$http.jsonp('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.states%20where%20place%3D%22United%20States%22&format=json&diagnostics=true&callback=JSON_CALLBACK').success( (data) ->
 		$scope.options = data.query.results.place
 	).error( (error) ->
@@ -60,8 +50,6 @@
 
 	$scope.loadTable = ->
 		$resource('./clients.json',{},{}).query().$promise.then( (data) ->
-			console.log("DATA")
-			console.log(data)
 			$scope.tableParams = new ngTableParams(
 			  page: 1 # show first page
 			  count: 5 # count per page
@@ -82,7 +70,15 @@
 	
 	$scope.loadTable()
 
+	# input watchers for phone and zipcode formats
+	$scope.phoneNumberChange = (client) ->
+		client.phone_number = formatLocal "US", client.phone_number
+
+	$scope.zipCodeChange = (client) ->
+		if ( (client.zip_code) && isNaN(client.zip_code) )
+			client.zip_code = client.zip_code.substring(0,client.zip_code.length-1)
+
+
+
+
 @ListCtrl.$inject = ['$scope', '$http', '$location', '$filter', '$resource', 'clientData', 'ngTableParams']
-
-
-

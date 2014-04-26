@@ -1,4 +1,4 @@
-angular.module('List').factory('clientData', ['$http', '$location', '$sanitize', ($http,$location) ->
+angular.module('List').factory('clientData', ['$http', '$location', '$sanitize', ($http, $location, $sanitize) ->
 
 	clientData = 
 		data:
@@ -16,8 +16,6 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 
 	#Method to update an existing client
 	clientData.updateClient = (client) ->
-		console.log("beff")
-		console.log(client)
 		data =
 			update_client:
 				id: client.id
@@ -28,8 +26,6 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 				city: client.city
 				state: client.state
 				zip_code: client.zip_code
-		console.log("before going to server")
-		console.log(data)
 		$http.put('./clients/'+data.update_client.id,data)
 
 	#Method to create a new client
@@ -37,16 +33,15 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 		data =
 			new_client:
 				first_name: $sanitize(newClient.first_name)
-				last_name: newClient.last_name
+				last_name: $sanitize(newClient.last_name)
 				phone_number: newClient.phone_number
-				address: newClient.address
-				city: newClient.city
+				address: $sanitize(newClient.address)
+				city: $sanitize(newClient.city)
 				state: newClient.state.name
 				zip_code: newClient.zip_code
 
 		$http.post('./clients.json',data).success( (data) ->
 			clientData.data.clients.push(data)
-			#add label on client list
 			alert("Added new client")
 			$location.url('/')
 			return true
@@ -59,11 +54,9 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 	#Method to get one client to show
 	clientData.getClient = (clientId) ->
 		$http.get('./clients/' + clientId + '.json').success( (data) ->
-			console.log("getClient")
-			console.log(data)
 			clientData.clientView = data
 		).error( ->
-			console.log("error getting one client")
+			alert("error getting one client")
 		)
  
 	#Method to load all clients from api
@@ -72,34 +65,26 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 			$http.get('./clients.json').success( (data) ->
 				clientData.data.clients = data
 				clientData.isLoaded = true
-				console.log("success")
-				console.log(data) 
 			).error( ->
-				console.error("failed")
+				alert("Cannot get all clients")
 			)
 
 
 	clientData.validateInputs = (client) ->
 		# validates address {zip_code and state}
 		if (client.address isnt "") and ((client.zip_code is "") or (not (client.state?)))
-			console.log("no puede pasar")
-			console.log(client)
 			return false
 		# validates city {zip_code and state}
 		if (client.city isnt "") and ((client.zip_code is "") or (not (client.state?)))
-			console.log("no puede pasar")
 			return false
 		# validates zip_code if state
 		if (client.sate?) and (client.zip_code is "")
-			console.log("no puede pasar")
 			return false
 		# validates state if zip_code
 		if (client.zip_code isnt "") and (not (client.state?))
-			console.log("no puede pasar")
 			return false
 
 		return true
-
 
 	return clientData
 
