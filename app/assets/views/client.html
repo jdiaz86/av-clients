@@ -11,19 +11,21 @@ form .input-group
 {
   padding: 0.5em 0;
 }
-input:focus::-webkit-input-placeholder { color:transparent; }
+.buttons input, .buttons button 
+{
+  margin: 1em 1em;
+}
 
 </style>
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <a ng-click="navHome()" class="brand" style="cursor:pointer;">AV Clients</a>
-    <ul class="nav pull-right">
-    	
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <ul class="nav navbar-nav">
+    <li><a ng-click="navHome()" class="brand" style="cursor:pointer;">AV Clients</a></li>
     </ul>
   </div>
-</div>
+</nav>
 
-<div class="container" style="margin-top: 40px">
+<div class="container">
 <div class="page-header">
   <h1 class="text-center" ng-show="view">View Client</h1>
   <h1 class="text-center" ng-show="edit">Edit Client</h1>
@@ -31,62 +33,69 @@ input:focus::-webkit-input-placeholder { color:transparent; }
  </div>
  <p></p>
   
-    <form action="" ng-submit="save(client)" style="margin: 2em 0 0 15em;">
+    <form action="" class="form-inline" role="form" ng-submit="save(client)" style="">
 
 
-    <div class="input-group">
-      <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span> First Name </span>      
-      <input class="span6" ng-model="client.first_name" placeholder="Add the client's first name" type="text" maxlength="100" ng-required="true" ng-disabled="view">
-
-      <span class="text-error" ng-hide="client.first_name"> Required! </span>
-
+    <div class="form-group" ng-class="{'has-error':!client.first_name, 'has-success':client.first_name}" style="width:48%;">
+      <label class="control-label"><span class="glyphicon glyphicon-user"></span> First Name </label>      
+      <input class="form-control" ng-model="client.first_name" placeholder="" type="text" maxlength="100" ng-required="true" ng-disabled="view" style="width:70%;margin-left:2em;">
+      <span class="help-block" ng-show="add || edit">Add the client's first name</span>
     </div>
 
-    <div class="input-group">
-      <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span> Last Name </span>
-      <input class="span6" ng-model="client.last_name" placeholder="Add the client's last name" type="text" maxlength="100" ng-required="true" ng-disabled="view">
-      <span class="text-error" ng-hide="client.last_name"> Required! </span>
+    <div class="form-group" ng-class="{'has-error':!client.last_name, 'has-success':client.last_name}" style="width:48%;">
+      <label class="control-label"><span class="glyphicon glyphicon-user"></span> Last Name </label>
+      <input class="form-control" ng-model="client.last_name" type="text" maxlength="100" ng-required="true" ng-disabled="view" style="width:70%;margin-left:1em;">
+      <span class="help-block" ng-show="add || edit"> Add the client's last name </span>
     </div>
 
-    <div class="input-group">
-      <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span> Phone Number</span>
-      <input class="span6" ng-model="client.phone_number" placeholder="Enter only numbers (US format valid)" type="text" maxlength="15" ng-required="true" ng-disabled="view" >
-      <span class="text-error" ng-hide="client.phone_number"> Required! </span>
+    </br>
+    </br>
+
+    <div class="form-group" ng-class="{'has-error':!client.phone_number, 'has-success':client.phone_number}" style="width:48%;">
+      <label class="control-label"><span class="glyphicon glyphicon-earphone"></span> Phone Number</label>
+      <input class="form-control" ng-model="client.phone_number" type="text" maxlength="15" ng-required="true" ng-disabled="view" style="width:70%;">
+      <span class="help-block" ng-show="add || edit"> Enter only numbers (US format valid) </span>
     </div>
 
-    <div class="input-group">
-
-      <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span> Address</span>
-      <input class="span6" ng-model="client.address" placeholder="Add the client's address" type="text" maxlength="100" ng-disabled="view">
+    <div class="form-group" style="width:48%;">
+      <label class="control-label"><span class="glyphicon glyphicon-home"></span> Address</label>
+      <input class="form-control" ng-model="client.address" type="text" maxlength="100" ng-disabled="view" style="width:70%;margin-left:2em;">
+      <span class="help-block" ng-show="add || edit"> Add the client's address </span>
     </div>
 
-    <div class="input-group">
-      <span class="input-group-addon"><span class="glyphicon glyphicon-tag"></span> City</span>
-      <input class="span6" ng-model="client.city" placeholder="Add the client's city" type="text" maxlength="100" ng-disabled="view">
+    </br>
+    </br>
+
+    <div class="form-group" style="width:48%;">
+      <label class="control-label"><span class="glyphicon glyphicon-tag"></span> City</label>
+      <input class="form-control" ng-model="client.city" type="text" maxlength="100" ng-disabled="view" style="width:70%;margin-left:5em;">
+      <span class="help-block" ng-show="add || edit"> Add the client's city </span>
     </div>
 
-    <div class="input-group">
-      <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span> State</span>
-      <select class="span6" ng-model="client.state" ng-options="opt.name for opt in options" ng-required="(client.address || client.city || client.zip_code) && !client.state" ng-disabled="view">
+    <div class="form-group" style="width:48%;" ng-class="{'has-error':(( (client.address || client.city) || client.zip_code) && !client.state), 'has-success':!(( (client.address || client.city) || client.zip_code) && !client.state)}">
+      <label class="control-label"><span class="glyphicon glyphicon-globe"></span> State</label>
+      <select class="form-control" ng-model="client.state" ng-options="opt.name for opt in options" ng-required="(client.address || client.city || client.zip_code) && !client.state" ng-disabled="view" style="width:70%;margin-left:4em;">
         <option value="" ng-hide="client.state">{{client.state}}</option>
       </select>
       <button class="btn btn-danger btn-xs" ng-click="client.state=''" ng-show="client.state && !view" style="margin-left:0.4em;"> <span class="glyphicon glyphicon-remove" ></span></button>
-      <span class="text-error" ng-show="( (client.address || client.city) || client.zip_code) && !client.state"> Required! </span>
+      <span class="help-block" ng-show="add || edit"> Select the client's state </span>
     </div>
 
-    <div class="input-group">
-      <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span> Zip Code</span>
-      <input class="span6" ng-model="client.zip_code" placeholder="Add the client's zip code" type="text" maxlength="5" ng-required="client.address || client.city || client.state" ng-disabled="view">
-      <span class="text-error" ng-show="( (client.address || client.city) || client.state) && !client.zip_code"> Required! </span>
+    </br>
+    </br>
+
+    <div class="form-group" style="width:48%;" ng-class="{'has-error':( ( (client.address || client.city) || client.state) && !client.zip_code), 'has-success':!( ( (client.address || client.city) || client.state) && !client.zip_code)}">
+      <label class="control-label"><span class="glyphicon glyphicon-map-marker"></span> Zip Code</label>
+      <input class="form-control" ng-model="client.zip_code" type="text" maxlength="5" ng-required="client.address || client.city || client.state" ng-disabled="view" style="width:70%;margin-left:3em;">
+      <span class="help-block" ng-show="add || edit"> Add the client's zip code </span>
     </div>
 
-    <p></p>
-
+<div class="buttons" style="margin-left:30em;">
     <input class="btn btn-primary" type="submit" id="submit" value="Update Client" ng-show="edit" />
     <input class="btn btn-primary" type="submit" id="submit" value="Add Client" ng-show="add" />
     <button class="btn btn-danger" ng-show="add" ng-click="clearData()">Clear Form</button>
     <button class="btn btn-info" ng-click="navHome()">Return </button>
-
+</div>
 
   </form>
 </div>
