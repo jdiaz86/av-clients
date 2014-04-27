@@ -51,10 +51,10 @@ form .input-group
   </br>
 </br>
 
-<div class="form-group" ng-class="{'has-error':!client.phone_number, 'has-success':client.phone_number}" style="width:48%;">
+<div class="form-group" ng-class="{'has-error':(!client.phone_number || !validPhoneNumber), 'has-success':(client.phone_number || validPhoneNumber)}" style="width:48%;">
   <label class="control-label"><span class="glyphicon glyphicon-earphone"></span> Phone Number</label>
   <input class="form-control" ng-model="client.phone_number" type="text" maxlength="15" ng-required="true" ng-disabled="view" style="width:70%;">
-  <span class="help-block" ng-show="add || edit"> Enter only numbers (US format valid) </span>
+  <span class="help-block" ng-show="add || edit"> US Format Valid <span ng-show="(client.phone_number && !validPhoneNumber)"> <strong> Phone number not valid, try again! </strong> </span> </span>
 </div>
 
 <div class="form-group" style="width:48%;">
@@ -84,15 +84,15 @@ form .input-group
 </br>
 </br>
 
-<div class="form-group" style="width:48%;" ng-class="{'has-error':( ( (client.address || client.city) || client.state) && !client.zip_code), 'has-success':!( ( (client.address || client.city) || client.state) && !client.zip_code)}">
+<div class="form-group" style="width:48%;" ng-class="{'has-error':( ( ( (client.address || client.city) || client.state) && !client.zip_code) || ((!validZipCode) && (client.zip_code) ) ), 'has-success':!(( ( (client.address || client.city) || client.state) && !client.zip_code) || ((!validZipCode) && (client.zip_code) ) )}">
   <label class="control-label"><span class="glyphicon glyphicon-map-marker"></span> Zip Code</label>
   <input class="form-control" ng-model="client.zip_code" type="text" maxlength="5" ng-required="client.address || client.city || client.state" ng-disabled="view" style="width:70%;margin-left:3em;">
-  <span class="help-block" ng-show="add || edit"> Add the client's zip code </span>
+  <span class="help-block" ng-show="add || edit"> 5 Digits Valid <span ng-show="(client.zip_code && !validZipCode)"> <strong> Zip code not valid, try again! </strong> </span> </span>
 </div>
 
 <div class="buttons" style="margin-left:30em;">
   <input class="btn btn-primary" type="submit" id="submit" value="Update Client" ng-show="edit" />
-  <input class="btn btn-primary" type="submit" id="submit" value="Add Client" ng-show="add" />
+  <input class="btn btn-primary" type="submit" id="submit" value="Save Client" ng-show="add" />
   <button class="btn btn-danger" ng-show="add" ng-click="clearData()">Clear Form</button>
   <button class="btn btn-info" ng-click="navHome()">Return </button>
 </div>

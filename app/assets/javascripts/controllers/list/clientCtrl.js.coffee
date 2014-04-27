@@ -49,16 +49,22 @@
 
 	# Method to save a client
 	$scope.saveAdd = (client) ->
-		clientData.addClient(client)
-		$scope.navHome()
+		$scope.validate = clientData.validateInputs(client)
+		if ($scope.validate)
+			if ( (isValidNumber client.phone_number, "US") && ( ((client.zip_code) && ($scope.validZipCode)) || !client.zip_code ) )
+				clientData.addClient(client)
+				$scope.navHome()
+		
+
 		
 	# Method to edit a client
 	$scope.saveEdit = (client) ->
-		client.state = client.state.name  if (client.state?) and (client.state.name?)
-		$scope.validate = clientData.validateInputs(client)
-		client.editMode = false;
-		clientData.updateClient(client)
-		$scope.navHome()
+		if ( (isValidNumber client.phone_number, "US") && ( ((client.zip_code) && ($scope.validZipCode)) || !client.zip_code ) )
+			client.state = client.state.name  if (client.state?) and (client.state.name?)
+			$scope.validate = clientData.validateInputs(client)
+			client.editMode = false;
+			clientData.updateClient(client)
+			$scope.navHome()
 
 	$http.jsonp('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.states%20where%20place%3D%22United%20States%22&format=json&diagnostics=true&callback=JSON_CALLBACK').success( (data) ->
 				$scope.options = data.query.results.place
@@ -76,11 +82,16 @@
 	# input watchers for phone and zipcode formats
 	$scope.$watch "client.phone_number", ->
 		$scope.client.phone_number = formatLocal "US", $scope.client.phone_number
+		$scope.validPhoneNumber = isValidNumber $scope.client.phone_number, "US"
 
 	$scope.$watch "client.zip_code", ->
 		if ( ($scope.client.zip_code) && isNaN($scope.client.zip_code) )
 			$scope.client.zip_code = $scope.client.zip_code.substring(0,$scope.client.zip_code.length-1)
-
+		if ($scope.client.zip_code)
+			if ($scope.client.zip_code.length <5)
+				$scope.validZipCode = false
+			else 
+				$scope.validZipCode = true
 
 
 @ClientCtrl.$inject = ['$scope', '$routeParams', '$resource', '$location', '$http', 'clientData']
