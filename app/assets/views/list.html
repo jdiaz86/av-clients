@@ -1,13 +1,23 @@
+<style>
+.container .alert 
+{
+	font-size: 0.85em;
+}
+</style>
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a ng-click="navAddClient()" style="cursor:pointer;">Add Client</a></li>
-			<li><a ng-click="about()" style="cursor:pointer;">About</a></li>
+			<li><a ng-click="navAddClient()" style="cursor:pointer;"> <h4> Add Client </h4> </a></li>
+			<li><a ng-click="about()" style="cursor:pointer;"><h4> About </h4> </a></li>
 		</ul>
 	</div>
 </nav>
 
 <div class="container">
+	<div id="messages">	
+		
+	</div>
+
 	<div class="page-header">
 		<h1> {{title}} <small> List of current clients </small> </h1>
 	</div>

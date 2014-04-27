@@ -36,7 +36,10 @@
 			$scope.loadTable()
 			$scope.clients.splice(index,1)			
 
-	
+	$scope.closeDeleteDialog = ->
+		console.log("kajfl")
+		$(".alert").alert('close')
+
 	$scope.dblClick = (client) ->
 		if (!client.editMode) 
 			$scope.editClient(client.id)
@@ -52,7 +55,7 @@
 		$resource('./clients.json',{},{}).query().$promise.then( (data) ->
 			$scope.tableParams = new ngTableParams(
 			  page: 1 # show first page
-			  count: 5 # count per page
+			  count: 10 # count per page
 			  sorting:
 			  	first_name: "asc"
 			  filter: 
