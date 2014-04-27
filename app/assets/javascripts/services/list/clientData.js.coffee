@@ -26,7 +26,12 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 				city: client.city
 				state: client.state
 				zip_code: client.zip_code
-		$http.put('./clients/'+data.update_client.id,data)
+		$http.put('./clients/'+data.update_client.id,data).success( (data) ->
+			alert("Client updated!")
+		).error ( ->
+			console.log("fail")
+			alert("error on update client")
+		)
 
 	#Method to create a new client
 	clientData.addClient = (newClient) ->
@@ -42,7 +47,7 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 
 		$http.post('./clients.json',data).success( (data) ->
 			clientData.data.clients.push(data)
-			alert("Added new client")
+			alert("Client added!")
 			$location.url('/')
 			return true
 		).error( ->
