@@ -12,7 +12,11 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 		data =
 			delete_client:
 				id: clientId
-		$http.delete('./clients/'+data.delete_client.id,data)
+		$http.delete('./clients/'+data.delete_client.id,data).success( (data) ->
+			clientData.showAlert("messages", "success","<strong>Well done!</strong> Client has been deleted!")
+		).error( ->
+			clientData.showAlert("messages", "danger","<strong>Error!</strong> cannot delete client!")
+		)
 
 	#Method to update an existing client
 	clientData.updateClient = (client) ->
@@ -27,10 +31,9 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 				state: client.state
 				zip_code: client.zip_code
 		$http.put('./clients/'+data.update_client.id,data).success( (data) ->
-			alert("Client updated!")
+			clientData.showAlert("messages", "success","<strong>Well done!</strong> Client has been updated!")
 		).error ( ->
-			console.log("fail")
-			alert("error on update client")
+			clientData.showAlert("messages", "danger","<strong>Error!</strong> cannot update client!")
 		)
 
 	#Method to create a new client
@@ -47,8 +50,7 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 
 		$http.post('./clients.json',data).success( (data) ->
 			clientData.data.clients.push(data)
-			alert("Client added!")
-			$location.url('/')
+			clientData.showAlert("messages", "success","<strong>Well done!</strong> Client has been created!")
 			return true
 		).error( ->
 			alert("Error on create new client")
@@ -90,6 +92,15 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 			return false
 
 		return true
+
+
+	# method to display an alert message and remove it after x seconds uses jquery
+	clientData.showAlert = (containerId, alertType, message) ->
+ 		$("#" + containerId).html "<div class=\"alert alert-" + alertType + " fade in" + "\">" + message + "</div>"
+			window.setTimeout ( ->
+				$(".alert").alert('close')
+				return
+			), 2500
 
 	return clientData
 

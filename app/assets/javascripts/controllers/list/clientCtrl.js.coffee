@@ -50,13 +50,15 @@
 	# Method to save a client
 	$scope.saveAdd = (client) ->
 		clientData.addClient(client)
-
+		$scope.navHome()
+		
 	# Method to edit a client
 	$scope.saveEdit = (client) ->
 		client.state = client.state.name  if (client.state?) and (client.state.name?)
 		$scope.validate = clientData.validateInputs(client)
 		client.editMode = false;
 		clientData.updateClient(client)
+		$scope.navHome()
 
 	$http.jsonp('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.states%20where%20place%3D%22United%20States%22&format=json&diagnostics=true&callback=JSON_CALLBACK').success( (data) ->
 				$scope.options = data.query.results.place
