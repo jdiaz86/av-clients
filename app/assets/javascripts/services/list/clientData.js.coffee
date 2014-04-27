@@ -85,11 +85,14 @@ angular.module('List').factory('clientData', ['$http', '$location', '$sanitize',
 		if (client.city isnt "") and ((client.zip_code is "") or (not (client.state?)))
 			return false
 		# validates zip_code if state
-		if (client.sate?) and (client.zip_code is "")
+		if (client.state?) and ( (client.zip_code is "") or (client.zip_code is `undefined`) )
 			return false
 		# validates state if zip_code
 		if (client.zip_code isnt "") and (not (client.state?))
 			return false
+		#validates first name, last name and phone number
+		if ((client.first_name is `undefined`) || (client.last_name is `undefined`) || (client.phone_number is `undefined`))
+			return false 		
 
 		return true
 

@@ -25,8 +25,11 @@
 		client.state = client.state.name  if (client.state?) and (client.state.name?)
 		$scope.validate = clientData.validateInputs(client)
 		if ($scope.validate)
-			client.editMode = false;
-			clientData.updateClient(client)
+			if ( (isValidNumber client.phone_number, "US") && ( ((client.zip_code) && (client.zip_code.length>=5)) || !client.zip_code ) )
+				client.editMode = false;
+				clientData.updateClient(client)
+			else 
+				alert("Phone number and/or zip code not valid, try again!")
 		else
 			alert("You must fill all required fields")
 
@@ -36,9 +39,6 @@
 			$scope.loadTable()
 			$scope.clients.splice(index,1)			
 
-	$scope.closeDeleteDialog = ->
-		console.log("kajfl")
-		$(".alert").alert('close')
 
 	$scope.dblClick = (client) ->
 		if (!client.editMode) 
