@@ -13,12 +13,14 @@ class ClientsController < ApplicationController
 	end
 
 	def destroy
+		#Destroy client by id
 		Client.find(params[:id]).destroy
 
 	end
 
 	def create
 
+		#create a new client and get all data from client-side
 		new_client = Client.new
 		new_client.first_name = params[:new_client][:first_name]
 		new_client.last_name = params[:new_client][:last_name]
@@ -28,7 +30,7 @@ class ClientsController < ApplicationController
 		new_client.state = params[:new_client][:state]
 		new_client.zip_code = params[:new_client][:zip_code]
 
-
+		#If valid, save the client
 		if new_client.valid?
 			new_client.save!
 		else
@@ -36,6 +38,7 @@ class ClientsController < ApplicationController
 			return
 		end
 
+		#Respond to request in json
 		respond_with(new_client) do |format|
 			format.json { render:json => new_client.as_json}
 		end
@@ -43,18 +46,20 @@ class ClientsController < ApplicationController
 
 
 	def show
+		#get a client by id
 		client = Client.find(params[:id])
 
+		#Respond to request in json
 		respond_with(client) do |format| 
 			format.json { render:json => client.as_json}
 		end
 	end
 
 	def index
-		#gather all client data
+		#get all client data
 		clients = Client.all
 
-		#Respond to request with client data in json
+		#Respond to request in json
 		respond_with(clients) do |format|
 			format.json { render:json => clients.as_json }
 		end
